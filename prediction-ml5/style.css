@@ -1,0 +1,237 @@
+/* Hier begint de styling van de body */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+}
+
+/* Hier begint de styling van de video */
+video {
+    display: block;
+    transform: rotateY(180deg);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    border: 2px solid #ddd;
+    max-width: 90%;
+}
+
+/* Hier begint de styling van de buttons */
+button {
+    font-size: 1.1em;
+    padding: 12px 24px;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+    font-weight: 600;
+}
+
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.08);
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Hier begint de styling van videoView */
+.videoView {
+    margin: auto;
+    position: relative;
+    width: 85vw; /* overruled by js */
+    max-width: 1200px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Hier begint de styling van de canvas element */
+.canvas {
+    z-index: 1;
+    position: absolute;
+    pointer-events: none;
+    border-radius: 8px;
+}
+
+/* Hier begint de styling van de output_canvas */
+.output_canvas {
+    margin: auto;
+    transform: rotateY(180deg);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* Hier begint de styling van de h1 */
+h1 {
+    text-align: center;
+    color: #222;
+    margin: 20px 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: 'Verdana', sans-serif;
+    line-height: 1.4;
+}
+
+/* Hier begint de styling van section-one */
+#section-one {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding: 25px 20px;
+    background: linear-gradient(135deg, #fff, #f7f7f7);
+    border: 1px solid #ccc;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    margin: 20px auto;
+    max-width: 750px;
+    text-align: center;
+}
+
+/* Hier begint de styling van webcam */
+#webcam {
+    border: 5px solid #555;
+    border-radius: 10px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Hier begint de hoofdlayout voor knoppen en webcam */
+#main-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Hier begint de styling van de linkerkolom */
+#controls {
+    flex-basis: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+/* Hier begint de styling van de feedback sectie */
+#feedback {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f0f9f2; /* Frisse groene achtergrond toegevoegd */
+    border: 2px solid #a1d8a9; /* Dikkere border met lichtgroene tint */
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.2); /* Subtiele groene schaduw */
+}
+
+#feedback h3 {
+    font-size: 1.6rem;
+    color: #367d39; /* Donkergroen voor titels */
+    margin-bottom: 15px;
+    border-bottom: 2px solid #a1d8a9; /* Dunne groene onderstreep */
+    display: inline-block;
+}
+
+#feedback p {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+#pose-instruction {
+    padding: 15px;
+    background: #ffffff; /* Witte achtergrond voor contrast */
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05); /* Subtiele schaduw binnenin */
+}
+
+#pose-instruction h4 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #2e6d30;
+}
+
+#pose-details {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-top: 5px;
+}
+
+/* Hier begint de styling van rechterkolom webcam en canvas */
+#liveView {
+    flex-basis: 65%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Hier begint de styling updates voor video */
+#webcam {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+}
+
+/* Hier begint de responsieve styling */
+@media (max-width: 768px) {
+    #main-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    #controls, #liveView {
+        flex-basis: 100%;
+        width: 100%;
+    }
+}
+
+/* Hier begint de header styling */
+#main-header {
+    width: 100%;
+    background: linear-gradient(135deg, #4CAF50, #367d39);
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-bottom: 4px solid #2e6d30;
+}
+
+.header-content h1 {
+    font-size: 2.8rem;
+    font-family: 'Arial', sans-serif;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.header-content p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 800px;
+    color: #dff0d8;
+    font-weight: 500;
+}
+
+/* Hier scheidt de header en main container */
+#main-container {
+    margin-top: 20px;
+}

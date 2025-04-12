@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media    Pipe Handpose</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer type="module" src="script.js"></script>
+</head>
+
+<body>
+
+<section id="section-one">
+    <h1>MediaPipe simplified Webcam bodypose example</h1>
+    <button id="webcamButton">Loading Pose Model...</button>
+    <button id="logPose">Log pose</button>
+</section>
+
+<label for="gympose-label" id="gymlabel">Type the pose and click log pose and wait 5 sec</label>
+<input type="text" id="gympose-label" name="gympose">
+<section id="liveView" class="videoView">
+    <video id="webcam" style="width: 1280px; height: 720px; position: absolute" autoplay playsinline muted></video>
+    <canvas class="output_canvas" id="output_canvas" width="1280" height="720"
+            style="position: absolute; left: 0px; top: 0px;"></canvas>
+</section>
+</body>
+
+</html>

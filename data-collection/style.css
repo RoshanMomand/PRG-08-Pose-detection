@@ -1,0 +1,33 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+}
+
+video {
+    display: block;
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+}
+
+button {
+    font-size:1em;
+    padding:1em;
+}
+
+.videoView {
+    position: relative;
+    width: 80vw;/*overruled by js*/
+}
+
+.canvas {
+    z-index: 1;
+    position: absolute;
+    pointer-events: none;
+}
+
+.output_canvas {
+    transform: rotateY(180deg);
+    -webkit-transform: rotateY(180deg);
+    -moz-transform: rotateY(180deg);
+}

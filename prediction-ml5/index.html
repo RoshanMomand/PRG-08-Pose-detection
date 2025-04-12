@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediaPipe Bodypose</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/ml5@1/dist/ml5.min.js"></script>
+    <script defer type="module" src="script.js"></script>
+</head>
+
+<body>
+
+<header id="main-header">
+    <div class="header-content">
+        <h1>Pose Detection Demo</h1>
+        <p>Real-time Gym Pose Detection using AI Models.<br>Track, improve, and perfect your poses effortlessly!</p>
+    </div>
+</header>
+
+<main id="main-container">
+    <!-- Controls en pose-weergave -->
+    <section id="controls">
+        <h2>Gym Posing Trainer</h2>
+
+        <!-- Willekeurige pose-display -->
+        <div id="pose-display">
+            <h3>Uit te voeren pose:</h3>
+            <p id="random-pose">...</p> <!-- Hier wordt de random pose weergegeven -->
+        </div>
+
+        <!-- Knoppen -->
+        <button id="webcamButton">Start Pose Model</button>
+        <button id="logPose">Predict Pose</button>
+
+        <!-- Feedback sectie -->
+        <div id="feedback">
+            <h3>Feedback</h3>
+            <p id="feedback-text">Hier wordt later feedback weergegeven...</p>
+<!--            <div id="pose-instruction">-->
+<!--                <h4>Voer deze pose uit:</h4>-->
+<!--                &lt;!&ndash; Plaats voor dynamische pose-output zoals landmarks of instructies &ndash;&gt;-->
+<!--                <p id="pose-details">De pose zal hier worden weergegeven...</p>-->
+<!--            </div>-->
+        </div>
+    </section>
+
+    <!-- Camera-sectie -->
+    <div id="cameras-container">
+        <section id="liveView" class="videoView">
+            <video id="webcam" autoplay playsinline muted></video>
+            <canvas class="output_canvas" id="output_canvas"></canvas>
+        </section>
+    </div>
+</main>
+
+</body>
+
+</html>
