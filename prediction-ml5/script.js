@@ -3,12 +3,15 @@ import {PoseLandmarker, FilesetResolver, DrawingUtils} from "https://cdn.skypack
 const video = document.getElementById("webcam");
 const canvasElement = document.getElementById("output_canvas");
 const enableWebcamButton = document.getElementById("webcamButton");
+const sectionLiveView = document.getElementById("liveView");
+const correctPoseDiv = document.getElementById("correct-pose-div");
 const logPoseButton = document.getElementById('logPose');
 const feedbackText = document.getElementById('feedback-text');
 const randomPoseElement = document.getElementById('random-pose'); // Element om de willekeurige pose te tonen
 const errorHeader = document.createElement('h1');
 const mainContainer = document.querySelector('main');
 const canvasCtx = canvasElement.getContext("2d");
+const img = document.createElement('img');
 const drawingUtils = new DrawingUtils(canvasCtx);
 
 let poseLandmarker = undefined;
@@ -45,6 +48,7 @@ async function getUniquePoses() {
  // Toon een willekeurige pose in de HTML
  ********************************************************************/
 function displayRandomPose(poses) {
+
     if (poses.length === 0) {
         randomPoseElement.textContent = "Geen poses beschikbaar.";
         return null;
@@ -53,6 +57,7 @@ function displayRandomPose(poses) {
     // Kies een random index en haal de corresponderende pose op
     const randomIndex = Math.floor(Math.random() * poses.length);
     const randomPose = poses[randomIndex];
+
 
     // Toon de willekeurige pose in het HTML-element
     randomPoseElement.textContent = randomPose;
@@ -105,7 +110,7 @@ const createPoseLandmarker = async () => {
 
     enableWebcamButton.addEventListener("click", enableCam);
     logPoseButton.addEventListener('click', () => {
-        setTimeout(predictPose, 5000);
+        setTimeout(predictPose, 200);
     });
 
     enableWebcamButton.innerText = "Start de Game!";
@@ -171,20 +176,32 @@ function drawPose(result) {
         }
         errorHeader.remove();
         canvasElement.style.opacity = 1;
+        canvasElement.style.filter = "none";
         resultHandMark = result.landmarks[0];
     } else {
         errorHeader.textContent = 'No body markers detected, get in view of the camera';
         document.body.append(errorHeader);
         canvasElement.style.opacity = "0.5";
+        resultHandMark = null
     }
 }
+
+let chances = 3;
 
 /********************************************************************
  // Voorspel de geselecteerde pose met ML5
  ********************************************************************/
-function predictPose() {
-    logPoseButton.disabled = true;
-    logPoseButton.textContent = 'Bezig met voorspellen...';
+async function predictPose() {
+    logPoseButton.disabled = true
+
+    // Controleer of we een geldige pose hebben om te voorspellen
+    if (!resultHandMark || resultHandMark.length === 0) {
+        feedbackText.textContent = "Geen pose data beschikbaar. Zorg dat je goed zichtbaar bent in de camera.";
+        logPoseButton.disabled = false;
+        logPoseButton.textContent = 'Predict Pose';
+        return; // Stop de functie
+    }
+
 
     let numbersonly = [];
     pose = resultHandMark;
@@ -192,20 +209,55 @@ function predictPose() {
         numbersonly.push(point.x, point.y, point.z);
     }
 
-    nn.classify(numbersonly, (results) => {
-        console.log(numbersonly);
-        console.log(results);
+    nn.classify(numbersonly, async (results) => {
         const label = results[0].label;
+        console.log(results[0])
         const confidence = (results[0].confidence * 100).toFixed(2);
 
-        feedbackText.textContent = `Ik ben ${confidence}% zeker dat dit de pose "${label}" is.`;
+        if (randomPoseElement.textContent === label) {
+            logPoseButton.disabled = true;
+            document.getElementById('correct-pose').innerText = 'Goeie pose gemaakt!!!'
+            feedbackText.textContent = `Ik ben ${confidence}% zeker dat dit de pose "${label}" is, Je hebt de juiste pose gedaan !!.`;
 
-        logPoseButton.disabled = false;
+
+            setTimeout(async () => {
+                const uniquePoses = await getUniquePoses();
+                const filteredPoses = uniquePoses.filter(pose => pose !== randomPoseElement.textContent);
+                displayRandomPose(filteredPoses);
+                feedbackText.textContent = `Nieuwe pose is geladen.`;
+                logPoseButton.disabled = false;
+                document.getElementById('correct-pose').innerText = 'Correct Pose will be shown here:'
+            }, 5000);
+        } else {
+            if (randomPoseElement.textContent !== label) {
+                chances--;
+                feedbackText.textContent = `Probeer opnieuw ! Je hebt nog ${chances} pogingen om te voorspellen daarna wordt het verklapte label weergegeven.`;
+                if (chances === 0) {
+                    logPoseButton.disabled = true;
+                    feedbackText.textContent = `Je hebt geen kansen meer, wacht tot de nieuwe pose wordt geladen :(.`;
+                    img.src = `./${randomPoseElement.textContent}.jpg`;
+                    document.getElementById('correct-pose').innerText = ''
+                    img.alt = 'Verklapte pose';
+                    correctPoseDiv.append(img);
+                    setTimeout(async () => {
+                        img.remove();
+                        const uniquePoses = await getUniquePoses();
+                        const filteredPoses = uniquePoses.filter(pose => pose !== randomPoseElement.textContent);
+                        displayRandomPose(filteredPoses);
+                        document.getElementById('correct-pose').innerText = 'Correct Pose will be shown here:'
+                        feedbackText.textContent = `Nieuwe pose is geladen.`;
+                        logPoseButton.disabled = false; // Re-enable the button after resetting
+                        chances = 3; // Reset the chances after a new pose is loaded
+
+                    }, 5000);
+                } else {
+                    logPoseButton.disabled = false; // Re-enable the button for further attempts if chances remain
+                }
+            }
+        }
+
         logPoseButton.textContent = 'Predict Pose';
-        setTimeout(() => {
-            feedbackText.textContent = 'Hier wordt later feedback weergegeven...';
-            logPoseButton.textContent = 'Predict Pose Again';
-        }, 4000);
+
     });
 }
 

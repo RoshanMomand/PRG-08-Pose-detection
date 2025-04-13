@@ -23,6 +23,7 @@ button {
     font-size: 1.1em;
     padding: 12px 24px;
     color: #fff;
+    width:50%;
     background-color: #4CAF50;
     border: none;
     border-radius: 8px;
@@ -59,7 +60,7 @@ button:hover {
 
 /* Hier begint de styling van de output_canvas */
 .output_canvas {
-    margin: auto;
+    /*margin: auto;*/
     transform: rotateY(180deg);
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -102,6 +103,7 @@ h1 {
 /* Hier begint de hoofdlayout voor knoppen en webcam */
 #main-container {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     gap: 20px;
@@ -119,7 +121,8 @@ h1 {
     background: #fff;
     border-radius: 12px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: left;
+    text-align: center;
+    margin: auto;
 }
 
 /* Hier begint de styling van de feedback sectie */
@@ -170,11 +173,12 @@ h1 {
 
 /* Hier begint de styling van rechterkolom webcam en canvas */
 #liveView {
-    flex-basis: 65%;
+    /*flex-basis: 65%;*/
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
+    gap:50px;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 12px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -187,11 +191,22 @@ h1 {
     max-width: 100%;
     height: auto;
 }
+.correct-pose-div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.correct-pose-div img{
+    object-fit: contain;
+    width:350px;
+    height:350px;
+    border-radius: 25%;
 
+}
 /* Hier begint de responsieve styling */
 @media (max-width: 768px) {
     #main-container {
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         gap: 20px;
     }
